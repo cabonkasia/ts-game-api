@@ -12,6 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const BaseEntity_1 = require("typeorm/repository/BaseEntity");
 let Game = class Game extends BaseEntity_1.BaseEntity {
+    setRandomColor(arr) {
+        const randomNum = (arr) => Math.floor(Math.random() * arr.length);
+        const randomColor = (arr) => arr[randomNum(arr)];
+        this.color = randomColor(arr);
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -22,11 +27,11 @@ __decorate([
     __metadata("design:type", String)
 ], Game.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column('text', { nullable: false }),
+    typeorm_1.Column('text', { nullable: true }),
     __metadata("design:type", String)
 ], Game.prototype, "color", void 0);
 __decorate([
-    typeorm_1.Column('json', { nullable: false }),
+    typeorm_1.Column('json', { nullable: true }),
     __metadata("design:type", Object)
 ], Game.prototype, "board", void 0);
 Game = __decorate([

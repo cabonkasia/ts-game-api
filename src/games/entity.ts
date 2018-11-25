@@ -11,9 +11,22 @@ export default class Game extends BaseEntity {
   @Column('text', {nullable:false})
   name: string
 
-  @Column('text', {nullable:false})
+  @Column('text', {nullable:true})
   color: string
 
-  @Column('json', {nullable:false})
+  @Column('json', {nullable:true})
   board: JSON
+
+  
+  setRandomColor(arr: Array<string>) {
+    const randomNum = (arr: Array<string>): number => Math.floor(Math.random()*arr.length)
+     const randomColor = (arr: Array<string>): string => arr[randomNum(arr)]
+     this.color = randomColor(arr)
+  }
+
+  // colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
+  // randomNum = (arr: Array<string>): number => Math.floor(Math.random()*arr.length)
+  // randomColor = (arr: Array<string>): string => arr[this.randomNum(arr)]
+  // this.color = this.randomColor(this.colorArr)
+
 }

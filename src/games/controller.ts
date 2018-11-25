@@ -2,9 +2,6 @@ import { NotFoundError, JsonController, Get, Put, Param, Body, Post, HttpCode } 
 import Game from './entity'
 
 
-// const colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
-// const randomNum = (arr: Array<string>): number => Math.floor(Math.random()*arr.length)
-// const randomColor = (arr: Array<string>): string => arr[randomNum(arr)]
 
 // const defaultBoard = [
 // 	["o", "o", "o"],
@@ -29,13 +26,16 @@ export default class GameController {
         return { games }
     }
 
-    // @Post('/games')
-    // @HttpCode(201)
-    // createGame(
-    //   @Param(name)
-    //   @Body() game: 
-    // ) {
-    //     return game.save()
-    // }
-
+    @Post('/games')
+    @HttpCode(201)
+    async createGame(
+      @Body() game: Game
+    ) {
+      const colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
+      const { color, ...rest } = game
+      const entity = Game.create(rest)
+      await entity.setRandomColor(colorArr)
+      return entity.save()
+    }
+  
 }
