@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
+import { IsIn } from 'class-validator'
 
 
 @Entity()
@@ -11,6 +12,7 @@ export default class Game extends BaseEntity {
   @Column('text', {nullable:false})
   name: string
 
+  // @IsIn(['red', 'blue', 'green', 'yellow', 'magenta'])
   @Column('text', {nullable:true})
   color: string
 
@@ -20,13 +22,11 @@ export default class Game extends BaseEntity {
   
   setRandomColor(arr: Array<string>) {
     const randomNum = (arr: Array<string>): number => Math.floor(Math.random()*arr.length)
-     const randomColor = (arr: Array<string>): string => arr[randomNum(arr)]
-     this.color = randomColor(arr)
+    const randomColor = (arr: Array<string>): string => arr[randomNum(arr)]
+    this.color = randomColor(arr)
   }
 
-  // colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
-  // randomNum = (arr: Array<string>): number => Math.floor(Math.random()*arr.length)
-  // randomColor = (arr: Array<string>): string => arr[this.randomNum(arr)]
-  // this.color = this.randomColor(this.colorArr)
-
+  setDefaultBoard(arr: string[][]) {
+    this.board = JSON.parse(JSON.stringify(arr))
+  }
 }

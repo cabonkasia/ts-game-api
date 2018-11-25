@@ -2,23 +2,9 @@ import { NotFoundError, JsonController, Get, Put, Param, Body, Post, HttpCode } 
 import Game from './entity'
 
 
-
-// const defaultBoard = [
-// 	["o", "o", "o"],
-// 	["o", "o", "o"],
-// 	["o", "o", "o"]
-// ]
-
-// const toNewGame = (name: string): Game => {
-//   return {
-//             name: name,
-//             color: randomColor(colorArr),
-//             board: {}.parse
-//   }
-// }
-
 @JsonController()
 export default class GameController {
+
 
     @Get('/games')
     async allGames() {
@@ -29,13 +15,31 @@ export default class GameController {
     @Post('/games')
     @HttpCode(201)
     async createGame(
-      @Body() game: Game
+        @Body() game: Game
     ) {
-      const colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
-      const { color, ...rest } = game
-      const entity = Game.create(rest)
-      await entity.setRandomColor(colorArr)
-      return entity.save()
+        const defaultBoard = [
+            ['o', 'o', 'o'],
+            ['o', 'o', 'o'],
+            ['o', 'o', 'o']
+        ]
+
+        const colorArr = ['red', 'blue', 'green', 'yellow', 'magenta']
+        const { color, ...rest } = game
+        const entity = Game.create(rest)
+        await entity.setRandomColor(colorArr)
+              entity.setDefaultBoard(defaultBoard)
+        return entity.save()
     }
-  
+
+    @Put('/games/:id')
+    async updateGame(
+        @Param('id') id: number,
+        @Body() update: Partial<Game>
+    ) {
+        const game = await Game.findOne(id)
+        if (!game) throw new NotFoundError('Cannot find game')
+
+        return Game.merge(game, update).save()
+    }
+
 }

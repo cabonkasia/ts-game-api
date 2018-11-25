@@ -17,6 +17,9 @@ let Game = class Game extends BaseEntity_1.BaseEntity {
         const randomColor = (arr) => arr[randomNum(arr)];
         this.color = randomColor(arr);
     }
+    setDefaultBoard(arr) {
+        this.board = JSON.parse(JSON.stringify(arr));
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
