@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const BaseEntity_1 = require("typeorm/repository/BaseEntity");
+const class_validator_1 = require("class-validator");
 let Game = class Game extends BaseEntity_1.BaseEntity {
     setRandomColor(arr) {
         const randomNum = (arr) => Math.floor(Math.random() * arr.length);
@@ -41,4 +42,20 @@ Game = __decorate([
     typeorm_1.Entity()
 ], Game);
 exports.default = Game;
+class GameChanged extends BaseEntity_1.BaseEntity {
+}
+__decorate([
+    typeorm_1.Column('text', { nullable: true }),
+    __metadata("design:type", String)
+], GameChanged.prototype, "name", void 0);
+__decorate([
+    class_validator_1.IsIn(['red', 'blue', 'green', 'yellow', 'magenta']),
+    typeorm_1.Column('text', { nullable: true }),
+    __metadata("design:type", String)
+], GameChanged.prototype, "color", void 0);
+__decorate([
+    typeorm_1.Column('json', { nullable: true }),
+    __metadata("design:type", Object)
+], GameChanged.prototype, "board", void 0);
+exports.GameChanged = GameChanged;
 //# sourceMappingURL=entity.js.map

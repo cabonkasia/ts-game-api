@@ -12,7 +12,6 @@ export default class Game extends BaseEntity {
   @Column('text', {nullable:false})
   name: string
 
-  // @IsIn(['red', 'blue', 'green', 'yellow', 'magenta'])
   @Column('text', {nullable:true})
   color: string
 
@@ -29,4 +28,17 @@ export default class Game extends BaseEntity {
   setDefaultBoard(arr: string[][]) {
     this.board = JSON.parse(JSON.stringify(arr))
   }
+}
+
+export class GameChanged extends BaseEntity {
+
+  @Column('text', {nullable:true})
+  name?: string
+
+  @IsIn(['red', 'blue', 'green', 'yellow', 'magenta'])
+  @Column('text', {nullable:true})
+  color?: string
+
+  @Column('json', {nullable:true})
+  board?: JSON
 }

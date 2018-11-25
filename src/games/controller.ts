@@ -1,10 +1,10 @@
 import { NotFoundError, JsonController, Get, Put, Param, Body, Post, HttpCode } from 'routing-controllers'
 import Game from './entity'
+import { GameChanged } from './entity'
 
 
 @JsonController()
 export default class GameController {
-
 
     @Get('/games')
     async allGames() {
@@ -34,11 +34,11 @@ export default class GameController {
     @Put('/games/:id')
     async updateGame(
         @Param('id') id: number,
-        @Body() update: Partial<Game>
+        @Body() update: GameChanged
     ) {
         const game = await Game.findOne(id)
-        if (!game) throw new NotFoundError('Cannot find game')
-
+        if (!game) 
+        throw new NotFoundError('Cannot find game')
         return Game.merge(game, update).save()
     }
 
